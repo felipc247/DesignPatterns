@@ -4,7 +4,7 @@ public abstract class FoodBase : MonoBehaviour, IFood
 {
     protected FoodData foodData;
 
-    public virtual void SetData(FoodData foodData)
+    public virtual void Initialize(FoodData foodData)
     {
         this.foodData = foodData; 
     }

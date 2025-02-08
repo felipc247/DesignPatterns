@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae8113dcbd592e459afdb1f46d63fe2, type: 3}
   m_Name: Hamburger
   m_EditorClassIdentifier: 
-  Name: 
-  Price: 0
-  PreparationTime: 0
-  FoodPrefab: {fileID: 0}
+  Name: Big Tasty
+  Price: 5
+  PreparationTime: 120
+  FoodPrefab: {fileID: 8000847695409490014, guid: 9e0e728ad620bf244b89e34930b844b2, type: 3}

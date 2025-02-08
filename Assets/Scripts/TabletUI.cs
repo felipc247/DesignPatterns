@@ -2,21 +2,28 @@ using UnityEngine;
 
 public class TabletUI : MonoBehaviour
 {
-    [SerializeField] Transform spawnPoint;
-    private IFoodFactory foodFactory;
-
-    private void Awake()
+    FoodData _selectedFood;
+    public void Next()
     {
-        foodFactory = new Factory();
+        _selectedFood = FoodCameraManager.Instance.OnNext();
     }
 
-    public void OnFoodSelected(FoodData foodData)
+    public void Previous()
     {
-        // creiamo l'oggetto
-        IFood newFood = foodFactory.Create(foodData);
+        _selectedFood = FoodCameraManager.Instance.OnPrevious();
+    }
+
+    public void OnFoodSelected()
+    {
+        if (_selectedFood == null)
+            return;
+
+        GameManager gm = GameManager.Instance;
+
+        IFood newFood = gm.FoodFactory.Create(_selectedFood);
         FoodBase foodBase = newFood as FoodBase;
 
-        foodBase.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation); // TODO: da cambiare
+        foodBase.transform.SetPositionAndRotation(gm.FoodSpawnPoint.position, gm.FoodSpawnPoint.rotation); // TODO: da cambiare
 
         foodBase.Serve();
     }

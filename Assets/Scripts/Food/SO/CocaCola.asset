@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae8113dcbd592e459afdb1f46d63fe2, type: 3}
   m_Name: CocaCola
   m_EditorClassIdentifier: 
-  Name: 
-  Price: 0
-  PreparationTime: 0
-  FoodPrefab: {fileID: 0}
+  Name: Coke 2.0
+  Price: 2.5
+  PreparationTime: 30
+  FoodPrefab: {fileID: -8324438577581560636, guid: 1dc2de87675d11142a9921d2ee2b12ac, type: 3}
