@@ -21,7 +21,8 @@ namespace DesignPatterns.Generics
                         {
                             try
                             {
-                                var loadedObject = Resources.Load<GameObject>(typeof(T).Name);
+                                var loadedObject = Resources.Load<GameObject>(typeof(T).Name); // il nome del GameObject prefab deve essere lo stesso del Tipo passato,
+                                                                                               // ad esempio se voglio istanziare un LevelManager il prefab si chiamerà LevelManager.prefab
 
                                 if (loadedObject != null) 
                                     Instantiate(loadedObject, Vector3.zero, Quaternion.identity);
