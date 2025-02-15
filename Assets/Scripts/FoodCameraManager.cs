@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class FoodCameraManager : Singleton<FoodCameraManager>
 {
-    [SerializeField] List<FoodBase> foodList;
-    [SerializeField] List<FoodData> foodData;
+    [SerializeField] List<FactorySpawnable> foodList;
+    [SerializeField] List<FactoryScriptableObject> foodData;
+
     int _currentIndex;
 
     public override void Awake()
@@ -23,7 +24,7 @@ public class FoodCameraManager : Singleton<FoodCameraManager>
         }
     }
 
-    public FoodData OnNext()
+    public FactoryScriptableObject OnNext()
     {
         if (foodList.Count == 0) return default;
 
@@ -38,7 +39,7 @@ public class FoodCameraManager : Singleton<FoodCameraManager>
         return foodData[_currentIndex];
     }
 
-    public FoodData OnPrevious()
+    public FactoryScriptableObject OnPrevious()
     {
         if (foodList.Count == 0) return default;
 

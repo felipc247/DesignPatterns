@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public Transform FoodSpawnPoint;
-    public IFoodFactory FoodFactory { get; private set; }
+    public IFactory FoodFactory { get; private set; }
 
     public override void Awake()
     {
@@ -18,3 +18,4 @@ public class GameManager : Singleton<GameManager>
         }
     }
 }
+ 
