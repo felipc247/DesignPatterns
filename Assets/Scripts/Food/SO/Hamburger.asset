@@ -15,4 +15,5 @@ MonoBehaviour:
   Name: Big Tasty
   Price: 5
   PreparationTime: 120
+  TimeUse: 2
   FoodPrefab: {fileID: 8000847695409490014, guid: 9e0e728ad620bf244b89e34930b844b2, type: 3}

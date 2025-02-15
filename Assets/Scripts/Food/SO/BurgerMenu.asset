@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0bffb8b1022a2458a7b87368d29bd7, type: 3}
   m_Name: BurgerMenu
   m_EditorClassIdentifier: 
-  Name: 
-  Price: 0
-  PreparationTime: 0
-  TimeUse: 0
-  Dimension: {x: 0, y: 0}
-  TrayPrefab: {fileID: 0}
+  Name: Burger Menu Full Xl
+  Price: 10
+  PreparationTime: 20
+  TimeUse: 4
+  Dimension: {x: 2, y: 2}
+  TrayPrefab: {fileID: 4403887179660150065, guid: 7e96f0b0da5565a4b99c81f8d0cd8391, type: 3}

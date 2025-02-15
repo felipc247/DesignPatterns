@@ -15,4 +15,5 @@ MonoBehaviour:
   Name: Coke 2.0
   Price: 2.5
   PreparationTime: 30
+  TimeUse: 1
   FoodPrefab: {fileID: -8324438577581560636, guid: 1dc2de87675d11142a9921d2ee2b12ac, type: 3}
