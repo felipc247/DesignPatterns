@@ -1,7 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TabletUI : MonoBehaviour
 {
+    private List<FactorySpawnable> objectPool = new List<FactorySpawnable>();
+
     FactoryScriptableObject _selectedFood;
     public void Next()
     {
@@ -20,6 +24,31 @@ public class TabletUI : MonoBehaviour
 
         GameManager gm = GameManager.Instance;
 
+        if (_selectedFood as FoodData != null)
+        {
+            FoodData foodData = _selectedFood as FoodData;
+            if (objectPool.Any(factorySpawnable => factorySpawnable.GetType() == foodData.FoodPrefab.GetType()))
+            {
+                var food = objectPool.FirstOrDefault(factorySpawnable => factorySpawnable.GetType() == foodData.FoodPrefab.GetType());
+                objectPool.Remove(food);
+                food.gameObject.SetActive(true);
+                SpawnFoodBase(gm, food as FoodBase);
+                return;
+            }
+        }
+        else if (_selectedFood as TrayData != null)
+        {
+            TrayData trayData = _selectedFood as TrayData;
+            if (objectPool.Any(factorySpawnable => factorySpawnable.GetType() == trayData.TrayPrefab.GetType()))
+            {
+                var tray = objectPool.FirstOrDefault(factorySpawnable => factorySpawnable.GetType() == trayData.TrayPrefab.GetType());
+                objectPool.Remove(tray);
+                tray.gameObject.SetActive(true);
+                SpawnTrayBase(gm, tray as TrayBase);
+                return;
+            }
+        }
+
         IFood newFood = gm.FoodFactory.Create(_selectedFood as FoodData);
         if (newFood != null)
         {
@@ -35,21 +64,35 @@ public class TabletUI : MonoBehaviour
         }
     }
 
-    private static void InitializeFoodBase(GameManager gm, IFood newFood)
+    private void InitializeFoodBase(GameManager gm, IFood newFood)
     {
         FoodBase foodBase = newFood as FoodBase;
 
+        SpawnFoodBase(gm, foodBase);
+        foodBase.onObjectClose += () => objectPool.Add(foodBase);
+    }
+
+    private void SpawnFoodBase(GameManager gm, FoodBase foodBase)
+    {
         foodBase.transform.SetPositionAndRotation(gm.FoodSpawnPoint.position, gm.FoodSpawnPoint.rotation);
 
         foodBase.Serve();
+
     }
 
-    private static void InitializeTrayBase(GameManager gm, ITray newTray)
+    private void InitializeTrayBase(GameManager gm, ITray newTray)
     {
         TrayBase trayBase = newTray as TrayBase;
 
+        SpawnTrayBase(gm, trayBase);
+        trayBase.onObjectClose += () => objectPool.Add(trayBase);
+    }
+
+    private void SpawnTrayBase(GameManager gm, TrayBase trayBase)
+    {
         trayBase.transform.SetPositionAndRotation(gm.FoodSpawnPoint.position, gm.FoodSpawnPoint.rotation);
 
         trayBase.Serve();
+
     }
 }

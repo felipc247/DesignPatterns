@@ -4,6 +4,7 @@ public class Hamburger : FoodBase
 {
     public override void Serve()
     {
-        Debug.Log("Wow! Che buono");
+        if (DestroyOnAwake)
+            StartCoroutine(CloseGameObject(TimeUse()));
     }
 }

@@ -121,3 +121,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec247e46b7856b41aed1ce5f813c694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DestroyOnAwake: 1

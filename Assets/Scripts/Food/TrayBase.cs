@@ -1,10 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 
 public abstract class TrayBase : FactorySpawnable, ITray
 {
     protected TrayData trayData;
+    private void OnEnable()
+    {
+        if (DestroyOnAwake && trayData != null)
+            Destroy(gameObject, TimeUse());
+    }
 
+    private void Start()
+    {
+        if (DestroyOnAwake)
+            Destroy(gameObject, TimeUse());
+    }
     public virtual void Initialize(TrayData trayData)
     {
         this.trayData = trayData;
