@@ -1,29 +1,25 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class LandingCharacterState : State
+public class AttackCharacterState : State
 {
     private float _delay = 1f;
     private float _timePassed = 0;
-    public LandingCharacterState(Player player)
+    Player _owner;
+    public AttackCharacterState(Player player)
     {
         _owner = player;
     }
 
-    public Player _owner { get; }
-
     public override void OnCollisionEnter()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnCollisionExit()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnEnd()
     {
-        Debug.Log("Sto uscendo da Landing");
     }
 
     public override void OnFixedUpdate()
@@ -33,29 +29,29 @@ public class LandingCharacterState : State
     public override void OnStart()
     {
         _timePassed = 0;
+        _owner.AttackResponse();
+        _owner.Animator.SetTrigger("Attack");
     }
 
     public override void OnTriggerEnter()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnTriggerExit()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnUpdate()
     {
+        _timePassed += Time.deltaTime;
+        if (_timePassed < _delay)
+            return;
+
         if (_owner.MoveRequest)
         {
             _owner.SetState(ECharacterState.Walking);
             return;
         }
-
-        _timePassed += Time.deltaTime;
-        if (_timePassed < _delay)
-            return;
 
         _owner.SetState(ECharacterState.Idle);
     }

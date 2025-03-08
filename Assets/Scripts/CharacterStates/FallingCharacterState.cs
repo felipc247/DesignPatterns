@@ -26,7 +26,6 @@ public class FallingCharacterState : State
 
     public override void OnFixedUpdate()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnStart()
@@ -46,6 +45,10 @@ public class FallingCharacterState : State
 
     public override void OnUpdate()
     {
-        Debug.Log("Sono nell'update di Falling");
+        if (_owner.IsGrounded)
+        {
+            _owner.SetState(ECharacterState.Landing);
+            return;
+        }
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class JumpingCharacterState : State
 {
+    private float previousY;
     public JumpingCharacterState(Player player)
     {
         _owner = player;
@@ -26,12 +27,13 @@ public class JumpingCharacterState : State
 
     public override void OnFixedUpdate()
     {
-        throw new System.NotImplementedException();
+        _owner.MoveHorizontal();
     }
 
     public override void OnStart()
     {
-        Debug.Log("Sto entrando in Jumping");
+        _owner.JumpImpulse();
+        previousY = _owner.transform.position.y;
     }
 
     public override void OnTriggerEnter()
@@ -46,6 +48,20 @@ public class JumpingCharacterState : State
 
     public override void OnUpdate()
     {
-        Debug.Log("Sono nell'update di Jumping");
+        if (_owner.IsGrounded)
+        {
+            // esco
+            _owner.SetState(ECharacterState.Landing);
+            return;
+        }
+
+        if (previousY > _owner.transform.position.y)
+        {
+            // sto cadendo
+            _owner.SetState(ECharacterState.Falling);
+            return;
+        }
+
+        previousY = _owner.transform.position.y;
     }
 }

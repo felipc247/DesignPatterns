@@ -26,7 +26,6 @@ public class IdleCharacterState : State
 
     public override void OnFixedUpdate()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnStart()
@@ -46,11 +45,23 @@ public class IdleCharacterState : State
 
     public override void OnUpdate()
     {
-        Debug.Log("Sono nell'update di Idle");
-
-        if (_owner.InputPressed == 'W')
+        if (_owner.JumpRequested)
         {
+            _owner.JumpResponse();
             _owner.SetState(ECharacterState.Jumping);
+            return;
+        }
+
+        if (_owner.MoveRequest)
+        {
+            _owner.SetState(ECharacterState.Walking);
+            return;
+        }
+
+        if (_owner.AttackRequested)
+        {
+            _owner.SetState(ECharacterState.Attacking);
+            return;
         }
     }
 }

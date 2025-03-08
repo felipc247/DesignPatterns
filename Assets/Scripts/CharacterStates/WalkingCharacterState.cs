@@ -26,7 +26,7 @@ public class WalkingCharacterState : State
 
     public override void OnFixedUpdate()
     {
-        throw new System.NotImplementedException();
+        _owner.MoveHorizontal();
     }
 
     public override void OnStart()
@@ -46,6 +46,29 @@ public class WalkingCharacterState : State
 
     public override void OnUpdate()
     {
-        Debug.Log("Sono nell'update di Walking");
+        if (!_owner.MoveRequest)
+        {
+            _owner.SetState(ECharacterState.Idle);
+            return;
+        }
+
+        if (!_owner.IsGrounded)
+        {
+            _owner.SetState(ECharacterState.Falling);
+            return;
+        }
+
+        if (_owner.JumpRequested)
+        {
+            _owner.JumpResponse();
+            _owner.SetState(ECharacterState.Jumping);
+            return;
+        }
+
+        if (_owner.AttackRequested)
+        {
+            _owner.SetState(ECharacterState.Attacking);
+            return;
+        }
     }
 }

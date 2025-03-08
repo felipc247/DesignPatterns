@@ -4,5 +4,6 @@ public enum ECharacterState
     Walking,
     Jumping,
     Falling,
-    Landing
+    Landing,
+    Attacking
 }
