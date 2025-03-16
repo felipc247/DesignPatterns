@@ -45,6 +45,12 @@ public class IdleCharacterState : State
 
     public override void OnUpdate()
     {
+        if (!_owner.IsGrounded)
+        {
+            _owner.SetState(ECharacterState.Falling);
+            return;
+        }
+
         if (_owner.JumpRequested)
         {
             _owner.JumpResponse();
