@@ -22,6 +22,7 @@ public class WalkingCharacterState : State
     public override void OnEnd()
     {
         Debug.Log("Sto uscendo da Walking");
+        _owner.Animator.SetBool("Moving", false);
     }
 
     public override void OnFixedUpdate()
@@ -32,6 +33,7 @@ public class WalkingCharacterState : State
     public override void OnStart()
     {
         Debug.Log("Sto entrando in Walking");
+        _owner.Animator.SetBool("Moving", true);
     }
 
     public override void OnTriggerEnter()
@@ -46,11 +48,11 @@ public class WalkingCharacterState : State
 
     public override void OnUpdate()
     {
-        if (!_owner.MoveRequest)
-        {
-            _owner.SetState(ECharacterState.Idle);
-            return;
-        }
+        //if(_owner.HitRequested)
+        //{
+        //    _owner.SetState(ECharacterState.Hit);
+        //    return;
+        //}
 
         if (!_owner.IsGrounded)
         {
@@ -58,16 +60,21 @@ public class WalkingCharacterState : State
             return;
         }
 
-        if (_owner.JumpRequested)
+        if (_owner.JumpChargeRequested)
         {
-            _owner.JumpResponse();
-            _owner.SetState(ECharacterState.Jumping);
+            _owner.SetState(ECharacterState.JumpCharging);
             return;
         }
 
         if (_owner.AttackRequested)
         {
             _owner.SetState(ECharacterState.Attacking);
+            return;
+        }
+
+        if (!_owner.MoveRequest)
+        {
+            _owner.SetState(ECharacterState.Idle);
             return;
         }
     }

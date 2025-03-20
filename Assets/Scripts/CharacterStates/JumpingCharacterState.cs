@@ -3,6 +3,7 @@ using UnityEngine;
 public class JumpingCharacterState : State
 {
     private float previousY;
+
     public JumpingCharacterState(Player player)
     {
         _owner = player;
@@ -12,17 +13,16 @@ public class JumpingCharacterState : State
 
     public override void OnCollisionEnter()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnCollisionExit()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnEnd()
     {
         Debug.Log("Sto uscendo da Jumping");
+        _owner.Animator.SetBool("Jumping", false);
     }
 
     public override void OnFixedUpdate()
@@ -30,24 +30,35 @@ public class JumpingCharacterState : State
         _owner.MoveHorizontal();
     }
 
+    private bool startDone = false;
+
     public override void OnStart()
     {
+        startDone = true;
+        Debug.Log("Sto entrando in Jumping");
+        _owner.JumpResponse();
         _owner.JumpImpulse();
+
+        _owner.Animator.SetBool("Jumping", true);
+
         previousY = _owner.transform.position.y;
     }
 
     public override void OnTriggerEnter()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnTriggerExit()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnUpdate()
     {
+        if (!startDone)
+        {
+            Debug.Log("Jumping: OnStart not done");
+            return;
+        }   
         if (_owner.IsGrounded)
         {
             // esco

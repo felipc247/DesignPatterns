@@ -35,20 +35,24 @@ public class IdleCharacterState : State
 
     public override void OnTriggerEnter()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnTriggerExit()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnUpdate()
     {
-        if (_owner.JumpRequested)
+        // Player was moved by an external force and fell
+        if (!_owner.IsGrounded)
         {
-            _owner.JumpResponse();
-            _owner.SetState(ECharacterState.Jumping);
+            _owner.SetState(ECharacterState.Falling);
+            return;
+        }
+
+        if (_owner.JumpChargeRequested)
+        {
+            _owner.SetState(ECharacterState.JumpCharging);
             return;
         }
 
@@ -63,5 +67,7 @@ public class IdleCharacterState : State
             _owner.SetState(ECharacterState.Attacking);
             return;
         }
+
+        
     }
 }

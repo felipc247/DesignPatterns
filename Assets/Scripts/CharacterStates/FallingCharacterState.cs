@@ -22,6 +22,7 @@ public class FallingCharacterState : State
     public override void OnEnd()
     {
         Debug.Log("Sto uscendo da Falling");
+        _owner.Animator.SetBool("Falling", false);
     }
 
     public override void OnFixedUpdate()
@@ -31,6 +32,7 @@ public class FallingCharacterState : State
     public override void OnStart()
     {
         Debug.Log("Sto entrando in Falling");
+        _owner.Animator.SetBool("Falling", true);
     }
 
     public override void OnTriggerEnter()

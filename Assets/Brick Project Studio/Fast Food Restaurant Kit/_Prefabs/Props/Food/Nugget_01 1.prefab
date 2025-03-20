@@ -123,6 +123,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Body: {fileID: 0}
+  Damage: 1
+  KnockbackForce: 2
+  KnockbackHeight: 2
 --- !u!54 &3486782312318430144
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -20,6 +20,9 @@ public class AttackCharacterState : State
 
     public override void OnEnd()
     {
+        Debug.Log("Sto uscendo da Attack");
+
+        _owner.Animator.SetBool("Attacking", false);
     }
 
     public override void OnFixedUpdate()
@@ -28,9 +31,13 @@ public class AttackCharacterState : State
 
     public override void OnStart()
     {
+        Debug.Log("Sto entrando in Attack");
+
         _timePassed = 0;
         _owner.AttackResponse();
-        _owner.Animator.SetTrigger("Attack");
+
+        // Changed to bool as triggers accumulated, especially on jump, leading to animations to break
+        _owner.Animator.SetBool("Attacking", true);
     }
 
     public override void OnTriggerEnter()
@@ -46,6 +53,12 @@ public class AttackCharacterState : State
         _timePassed += Time.deltaTime;
         if (_timePassed < _delay)
             return;
+
+        if (!_owner.IsGrounded)
+        {
+            _owner.SetState(ECharacterState.Falling);
+            return;
+        }
 
         if (_owner.MoveRequest)
         {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LandingCharacterState : State
 {
-    private float _delay = 1f;
+    private float _delay = 0.25f;
     private float _timePassed = 0;
     public LandingCharacterState(Player player)
     {
@@ -24,6 +24,7 @@ public class LandingCharacterState : State
     public override void OnEnd()
     {
         Debug.Log("Sto uscendo da Landing");
+        _owner.Animator.SetBool("Landing", false);
     }
 
     public override void OnFixedUpdate()
@@ -33,16 +34,15 @@ public class LandingCharacterState : State
     public override void OnStart()
     {
         _timePassed = 0;
+        _owner.Animator.SetBool("Landing", true);
     }
 
     public override void OnTriggerEnter()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnTriggerExit()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void OnUpdate()

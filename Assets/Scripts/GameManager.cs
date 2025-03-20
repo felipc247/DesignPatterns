@@ -1,5 +1,7 @@
 using DesignPatterns.Generics;
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -25,29 +27,36 @@ public class GameManager : Singleton<GameManager>
         _input.Player.Move.performed += Move_performed;
         _input.Player.Move.canceled += Move_canceled;
 
-        _input.Player.Jump.performed += Jump_performed;
+        _input.Player.JumpCharge.performed += JumpCharge_performed;
+        _input.Player.JumpCharge.canceled += JumpCharge_canceled;
 
         _input.Player.Attack.performed += Attack_performed;
 
         _input.Enable();
     }
 
-    private void Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void JumpCharge_canceled(InputAction.CallbackContext obj)
+    {
+        // if request went through, respond
+        if (player.JumpChargeRequested) player.JumpChargeResponse();
+    }
+
+    private void Attack_performed(InputAction.CallbackContext obj)
     {
         player.AttackRequest();
     }
 
-    private void Jump_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void JumpCharge_performed(InputAction.CallbackContext obj)
     {
-        player.JumpRequest();
+        player.JumpChargeRequest();
     }
 
-    private void Move_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void Move_canceled(InputAction.CallbackContext obj)
     {
         player.MoveDirectionRequest(Vector2.zero);
     }
 
-    private void Move_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void Move_performed(InputAction.CallbackContext obj)
     {
         player.MoveDirectionRequest(obj.ReadValue<Vector2>());
     }
