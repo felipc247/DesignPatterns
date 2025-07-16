@@ -31,8 +31,14 @@ public class GameManager : Singleton<GameManager>
         _input.Player.JumpCharge.canceled += JumpCharge_canceled;
 
         _input.Player.Attack.performed += Attack_performed;
+        _input.Player.Look.performed += Look_performed;
 
         _input.Enable();
+    }
+
+    private void Look_performed(InputAction.CallbackContext context)
+    {
+        player.Look(context.ReadValue<Vector2>());
     }
 
     private void JumpCharge_canceled(InputAction.CallbackContext obj)

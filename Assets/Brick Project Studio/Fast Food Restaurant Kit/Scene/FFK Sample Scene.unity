@@ -2249,6 +2249,8 @@ MonoBehaviour:
   minimumJumpForce: 2
   jumpChargeMaxTime: 1
   movementSpeed: 200
+  horizonatlSensitivity: 3
+  verticalSensitivity: 2
   hp: 0
   hpMax: 10
   Animator: {fileID: 0}
@@ -2261,16 +2263,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89799142}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.97, y: -0.09291375, z: -14.859999}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.57, y: 0.57, z: 0.57}
+  m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 545666807}
   - {fileID: 1254685499}
   - {fileID: 671547267}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &89799145
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11215,12 +11216,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545666806}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.3, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.97, y: 1.2070862, z: -14.859999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 89799144}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &545666808
 MonoBehaviour:
@@ -46492,6 +46493,7 @@ SceneRoots:
   - {fileID: 3946086}
   - {fileID: 576615900}
   - {fileID: 352687260}
+  - {fileID: 545666807}
   - {fileID: 1805730315}
   - {fileID: 89799144}
   - {fileID: 2028138572}

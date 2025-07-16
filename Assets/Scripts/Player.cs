@@ -14,8 +14,13 @@ public class Player : MonoBehaviour, IDamageable
 
     [SerializeField] float movementSpeed;
 
+    [SerializeField] float horizonatlSensitivity;
+    [SerializeField] float verticalSensitivity;
+
     [SerializeField] float hp;
     [SerializeField] float hpMax;
+
+    private Camera mainCamera;
 
     public Animator Animator;
     Rigidbody _rigidBody;
@@ -38,6 +43,8 @@ public class Player : MonoBehaviour, IDamageable
     {
         hp = hpMax;
 
+        Cursor.lockState = CursorLockMode.Locked;
+
         Animator = GetComponent<Animator>();
         _rigidBody = GetComponent<Rigidbody>();
 
@@ -53,6 +60,8 @@ public class Player : MonoBehaviour, IDamageable
         StateMachine.RegisterState(ECharacterState.JumpCharging, new JumpChargingCharacterState(this));
 
         SetState(ECharacterState.Idle);
+
+        mainCamera = Camera.main;
     }
 
     public void GroundCheck()
@@ -76,6 +85,8 @@ public class Player : MonoBehaviour, IDamageable
         {
             SetState(ECharacterState.Hit);
         }
+
+        mainCamera.transform.position = transform.position + new Vector3(0, 2f, -1.5f);
     }
 
     private void FixedUpdate()
@@ -148,11 +159,10 @@ public class Player : MonoBehaviour, IDamageable
 
     internal void MoveHorizontal()
     {
-        Vector3 horizontalMovement =
-            movementSpeed * Time.fixedDeltaTime * new Vector3(MoveDirection.x, 0, MoveDirection.y).normalized;
+        Vector3 horizontalMovement = transform.forward.normalized * MoveDirection.y + transform.right.normalized * MoveDirection.x;
 
         _rigidBody.linearVelocity =
-            new Vector3(horizontalMovement.x, _rigidBody.linearVelocity.y, horizontalMovement.z);
+            new Vector3(horizontalMovement.normalized.x * movementSpeed * Time.fixedDeltaTime, _rigidBody.linearVelocity.y, horizontalMovement.normalized.z * movementSpeed * Time.fixedDeltaTime);
     }
 
     internal void AttackRequest()
@@ -187,5 +197,20 @@ public class Player : MonoBehaviour, IDamageable
     {
         gameObject.SetActive(false);
         Debug.Log("Player died");
+    }
+
+    private float horizontallRotation;
+    private float verticalRotation;
+
+    internal void Look(Vector2 vector2)
+    {
+        horizontallRotation += vector2.x * horizonatlSensitivity * Time.smoothDeltaTime;
+        verticalRotation += vector2.y * verticalSensitivity * Time.smoothDeltaTime;
+
+        // Clamp vertical rotation to prevent camera flipping
+        verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
+
+        mainCamera.transform.localRotation = Quaternion.Euler(-verticalRotation, horizontallRotation, 0);
+        transform.rotation = Quaternion.Euler(0, mainCamera.transform.localRotation.eulerAngles.y, 0);
     }
 }
